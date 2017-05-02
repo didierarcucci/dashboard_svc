@@ -1,0 +1,18 @@
+{
+  "name": "dashboard_svc",
+  "version": "1.0.0",
+  "description": "Services for the dashboard app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Didier Arcucci",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mssql": "^4.0.1",
+    "tedious": "^2.0.0"
+  }
+}
