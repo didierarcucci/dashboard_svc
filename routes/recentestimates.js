@@ -1,6 +1,6 @@
 var sql = require('mssql');
 
-var recentestimatesquery = 'select * from didier.est.ufnGetRecentEstimates(3)';
+var recentestimatesquery = 'select * from didier.est.ufnGetRecentEstimates(10)';
 
 module.exports = function(pool) {
     console.log("Route recentestimates - OK");
