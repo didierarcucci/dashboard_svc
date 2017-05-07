@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 var app = express();
 
 var sql = require('mssql');
+
 var dbConfig = {
     server: "172.21.40.76",
     database: "DIDIER",
@@ -15,21 +16,16 @@ var pool = new sql.ConnectionPool(dbConfig);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var recentestimates = require('./routes/recentestimates')(pool);
-var enhancements = require('./routes/enhancements')(pool);
-var estimatedetails = require ('./routes/estimatedetails')(pool);
-
-app.get("/recentestimates", recentestimates.get);
-app.get("/enhancements", enhancements.get);
-app.get("/estimatedetails", estimatedetails.get);
+var routes = require('./routes/estimateroutes');
+routes(app, pool);
 
 pool.connect().then(() => {
-    console.log("successfully connected database");
+    console.log("SUCCESSFULLY CONNECTED TO DATABASE");
 
     var server = app.listen(3000, function () {
-        console.log("Listening on port %s...", server.address().port);
+        console.log("LISTENING ON PORT %s...", server.address().port);
     });
 
 }).catch(err => {
-        console.log("error while connecting database - " + err);
+        console.log("ERROR WHILE CONNECTING TO DATABASE => " + err);
 });
