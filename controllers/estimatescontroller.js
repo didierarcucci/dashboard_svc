@@ -3,7 +3,7 @@
 var sql = require('mssql');
 
 module.exports = function(pool) {
-    console.log("CONTROLLER ESTIMATE - OK");
+    console.log("ESTIMATE CONTROLLER START");
 
     var thisroute;
 
@@ -92,5 +92,7 @@ module.exports = function(pool) {
         }
     };
     
+    console.log("ESTIMATE CONTROLLER END");
+
     return me;
 };
