@@ -15,5 +15,15 @@ module.exports = function(app, pool) {
 
     console.log("... ROUTE /estimatedetails ... OK");
 
+    app.route("/componentlist/:estimateId")
+        .get(estimates.list_components);
+
+    console.log("... ROUTE /componentlist   ... OK");
+
+    app.route("/estimaterolelist/:estimateId")
+        .get(estimates.list_estimate_roles);
+
+    console.log("... ROUTE /estimaterolelist   ... OK");
+
     console.log("ESTIMATES - ROUTES - END");
 }

@@ -5,6 +5,8 @@ var sql = require('mssql');
 module.exports = function(pool) {
     console.log("CONTROLLER ESTIMATE - OK");
 
+    var thisroute;
+
     var me = {
         list_recent: function(req, res, next) {
             console.log("START LIST_RECENT");
@@ -36,11 +38,54 @@ module.exports = function(pool) {
             console.log("... EXECUTE SQL QUERY");
             request.execute('didier.est.uspGetEstimateById').then(result =>  {
                 console.log("... FUNCTION SUCCESSFULLY EXECUTED");
-                console.log("END LIST_RECENT");
+                console.log("END LIST_DETAILS");
                 return res.send(result.recordset);
             }).catch (err => {
                 console.log("... ERROR WHILE QUERYING DATABASE => " + err);
-                console.log("END LIST_RECENT");
+                console.log("END LIST_DETAILS");
+                res.status(500).send(err.message);
+                return;
+            });
+        },
+        list_components: function(req, res, next) {
+            console.log("START LIST_COMPONENTS");
+
+            console.log("... INIT SQL REQUEST");
+            var request = new sql.Request(pool);
+
+            console.log("... INPUT PARAM ESTIMATEID => " + req.params.estimateId);
+            request.input('EstimateId', sql.Int, req.params.estimateId);
+
+            console.log("... EXECUTE SQL QUERY");
+            request.execute('didier.est.uspGetComponentList').then(result =>  {
+                console.log("... FUNCTION SUCCESSFULLY EXECUTED");
+                console.log("END LIST_COMPONENTS");
+                return res.send(result.recordset);
+            }).catch (err => {
+                console.log("... ERROR WHILE QUERYING DATABASE => " + err);
+                console.log("END LIST_COMPONENTS");
+                res.status(500).send(err.message);
+                return;
+            });
+        },
+        list_estimate_roles: function(req, res, next) {
+            thisroute = "LIST_ESTIMATE_ROLES";
+            console.log("START " + thisroute);
+
+            console.log("... INIT SQL REQUEST");
+            var request = new sql.Request(pool);
+
+            console.log("... INPUT PARAM ESTIMATEID => " + req.params.estimateId);
+            request.input('EstimateId', sql.Int, req.params.estimateId);
+
+            console.log("... EXECUTE SQL QUERY");
+            request.execute('didier.est.uspGetEstimateRoleList').then(result =>  {
+                console.log("... FUNCTION SUCCESSFULLY EXECUTED");
+                console.log("END " + thisroute);
+                return res.send(result.recordset);
+            }).catch (err => {
+                console.log("... ERROR WHILE QUERYING DATABASE => " + err);
+                console.log("END " + thisroute);
                 res.status(500).send(err.message);
                 return;
             });
