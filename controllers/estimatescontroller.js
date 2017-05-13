@@ -32,8 +32,8 @@ module.exports = function(pool) {
             console.log("... INIT SQL REQUEST");
             var request = new sql.Request(pool);
 
-            console.log("... INPUT PARAM ESTIMATEID => " + req.params.estimateId);
-            request.input('EstimateId', sql.Int, req.params.estimateId);
+            console.log("... INPUT PARAM ESTIMATEID => " + req.query.estimateId);
+            request.input('EstimateId', sql.Int, req.query.estimateId);
 
             console.log("... EXECUTE SQL QUERY");
             request.execute('didier.est.uspGetEstimateById').then(result =>  {
@@ -80,6 +80,50 @@ module.exports = function(pool) {
 
             console.log("... EXECUTE SQL QUERY");
             request.execute('didier.est.uspGetEstimateRoleList').then(result =>  {
+                console.log("... FUNCTION SUCCESSFULLY EXECUTED");
+                console.log("END " + thisroute);
+                return res.send(result.recordset);
+            }).catch (err => {
+                console.log("... ERROR WHILE QUERYING DATABASE => " + err);
+                console.log("END " + thisroute);
+                res.status(500).send(err.message);
+                return;
+            });
+        },
+        component_details: function(req, res, next) {
+            thisroute = "COMPONENT_DETAILS";
+            console.log("START " + thisroute);
+
+            console.log("... INIT SQL REQUEST");
+            var request = new sql.Request(pool);
+
+            console.log("... INPUT PARAM ESTIMATEID => " + req.query.componentId);
+            request.input('componentId', sql.Int, req.query.componentId);
+
+            console.log("... EXECUTE SQL QUERY");
+            request.execute('didier.est.uspGetComponentById').then(result =>  {
+                console.log("... FUNCTION SUCCESSFULLY EXECUTED");
+                console.log("END " + thisroute);
+                return res.send(result.recordset);
+            }).catch (err => {
+                console.log("... ERROR WHILE QUERYING DATABASE => " + err);
+                console.log("END " + thisroute);
+                res.status(500).send(err.message);
+                return;
+            });
+        },
+        list_assignments: function(req, res, next) {
+            thisroute = "LIST_ASSIGNMENTS";
+            console.log("START " + thisroute);
+
+            console.log("... INIT SQL REQUEST");
+            var request = new sql.Request(pool);
+
+            console.log("... INPUT PARAM ESTIMATEID => " + req.query.componentId);
+            request.input('componentId', sql.Int, req.query.componentId);
+
+            console.log("... EXECUTE SQL QUERY");
+            request.execute('didier.est.uspGetAssignmentList').then(result =>  {
                 console.log("... FUNCTION SUCCESSFULLY EXECUTED");
                 console.log("END " + thisroute);
                 return res.send(result.recordset);
