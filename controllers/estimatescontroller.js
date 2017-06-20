@@ -15,7 +15,7 @@ module.exports = function(pool) {
             var request = new sql.Request(pool);
 
             console.log("... EXECUTE SQL QUERY");
-            request.query('select * from didier.est.ufnGetRecentEstimates(10)').then(result =>  {
+            request.query('select top 10 * from didier.est.EstimatesView order by UpdateDate desc').then(result =>  {
                 console.log("... QUERY SUCCESSFULLY EXECUTED");
                 console.log("END LIST_RECENT");
                 return res.send(result.recordset);
@@ -33,10 +33,10 @@ module.exports = function(pool) {
             var request = new sql.Request(pool);
 
             console.log("... INPUT PARAM ESTIMATEID => " + req.query.estimateId);
-            request.input('EstimateId', sql.Int, req.query.estimateId);
+            //request.input('EstimateId', sql.Int, req.query.estimateId);
 
             console.log("... EXECUTE SQL QUERY");
-            request.execute('didier.est.uspGetEstimateById').then(result =>  {
+            request.query('select * from didier.est.EstimatesView where EstimateId = ' + req.query.estimateId).then(result =>  {
                 console.log("... FUNCTION SUCCESSFULLY EXECUTED");
                 console.log("END LIST_DETAILS");
                 return res.send(result.recordset);
@@ -54,10 +54,10 @@ module.exports = function(pool) {
             var request = new sql.Request(pool);
 
             console.log("... INPUT PARAM ESTIMATEID => " + req.params.estimateId);
-            request.input('EstimateId', sql.Int, req.params.estimateId);
+            //request.input('EstimateId', sql.Int, req.params.estimateId);
 
             console.log("... EXECUTE SQL QUERY");
-            request.execute('didier.est.uspGetComponentList').then(result =>  {
+            request.query('select * from didier.est.ComponentsFlat where ComponentName <> \'Estimate\' and EstimateId = ' + req.params.estimateId).then(result =>  {
                 console.log("... FUNCTION SUCCESSFULLY EXECUTED");
                 console.log("END LIST_COMPONENTS");
                 return res.send(result.recordset);
