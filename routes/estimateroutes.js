@@ -1,10 +1,13 @@
 'use strict';
 
 module.exports = function(app, pool) {
-    console.log("ESTIMATE ROUTES START");
+    console.log("ROUTES START");
 
     var estimates = require('../controllers/estimatescontroller')(pool);
     var dashboard = require('../controllers/dashboardcontroller')(pool);
+    var resources = require('../controllers/resourcescontroller')(pool);
+
+    console.log("LOADING ESTIMATE ROUTES START");
 
     app.route("/recentestimates")
         .get(estimates.list_recent);
@@ -30,9 +33,23 @@ module.exports = function(app, pool) {
         .get(estimates.list_assignments);
     console.log("ROUTE /assignmentlist   ... OK");
 
+    console.log("LOADING ESTIMATE ROUTES END");
+
+    console.log("LOADING DASHBOARD ROUTES START");
+
     app.route("/dashboardkpi")
         .get(dashboard.kpi);
     console.log("ROUTE /dashboardkpi     ... OK");
 
-    console.log("ESTIMATE ROUTES END");
+    console.log("LOADING DASHBOARD ROUTES END");
+
+    console.log("LOADING RESOURCES ROUTES START");
+
+    app.route("/resources")
+        .get(resources.list_resources);
+    console.log("ROUTE /resources        ... OK");
+
+    console.log("LOADING RESOURCES ROUTES END");
+
+    console.log("ROUTES END");
 }
