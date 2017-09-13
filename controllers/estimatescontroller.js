@@ -15,7 +15,7 @@ module.exports = function(pool) {
             var request = new sql.Request(pool);
 
             console.log("... EXECUTE SQL QUERY");
-            request.query('select top 10 * from didier.est.EstimatesView order by UpdateDate desc').then(result =>  {
+            request.query('select * from didier.est.EstimatesView order by UpdateDate desc').then(result =>  {
                 console.log("... QUERY SUCCESSFULLY EXECUTED");
                 console.log("END LIST_RECENT");
                 return res.send(result.recordset);
