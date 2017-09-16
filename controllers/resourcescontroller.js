@@ -15,7 +15,7 @@ module.exports = function(pool) {
             var request = new sql.Request(pool);
 
             console.log("... EXECUTE SQL QUERY");
-            request.query('select * from didier.dbo.dim_emp').then(result =>  {
+            request.query('select * from didier.dbo.dim_emp order by active desc, empname').then(result =>  {
                 console.log("... QUERY SUCCESSFULLY EXECUTED");
                 console.log("END LIST_RESOURCES");
                 return res.send(result.recordset);
