@@ -48,6 +48,10 @@ module.exports = function(app, pool) {
     app.route("/resources")
         .get(resources.list_resources);
     console.log("ROUTE /resources        ... OK");
+    
+    app.route("/resourcedetails")
+        .get(resources.resource_details);
+    console.log("ROUTE /resourcesdetails ... OK");
 
     console.log("LOADING RESOURCES ROUTES END");
 
